@@ -69,7 +69,7 @@ class StyleDetector:
     def get_text_width(self):
 
         row_wise_weights_mode = np.apply_along_axis(StyleDetector.compute_row_wise_width, axis=1, arr=self.binary_image)
-        font_weight = st.mode(row_wise_weights_mode, keepdims=True)[0][0]
+        font_weight = st.mode(row_wise_weights_mode)[0][0]
         font_width = self.font_width_map.get(font_weight, "bold")
         return font_width
 
@@ -100,7 +100,7 @@ class StyleDetector:
         index_ranges = np.where(abs_diff == 1)[0].reshape(-1, 2)
         if len(index_ranges) == 0:
             return 0
-        return st.mode(np.diff(index_ranges).reshape(-1), keepdims=True)[0][0]
+        return st.mode(np.diff(index_ranges).reshape(-1))[0][0]
 
     def crop_bounding_region(self):
         x_min, y_min, x_max, y_max = self.boundary
